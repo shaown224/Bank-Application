@@ -1,13 +1,13 @@
 import java.sql.Date;
 import java.util.Scanner;
 
-public class BankAccountDetails {
+public class BankAccountDetails extends MainApp {
 
-    private String accountHolderName;
-    String accountNumber;
-    private String accountType;
-    private Date accountCreatedDate;
-    private double accountBalance;
+    protected String accountHolderName;
+    protected String accountNumber;
+    protected String accountType;
+    protected Date accountCreatedDate;
+    protected double accountBalance;
     Scanner scanner = new Scanner(System.in);
 
     public void createNewAccount() {
@@ -22,6 +22,26 @@ public class BankAccountDetails {
         System.out.print("Account Balance: ");
         accountBalance = scanner.nextDouble();
         scanner.nextLine();
+    }
+
+    public void setAccountHolderName(String accountHolderName) {
+        this.accountHolderName = accountHolderName;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
+    }
+
+    public void setAccountCreatedDate(Date accounCreatedDate) {
+        this.accountCreatedDate = accounCreatedDate;
+    }
+
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
     }
 
     public String getAccountHolderName() {
@@ -44,15 +64,7 @@ public class BankAccountDetails {
         return this.accountBalance;
     }
 
-    public void showAccount() {
-        System.out.println("Name of account holder: " + accountHolderName);
-        System.out.println("Account no.: " + accountHolderName);
-        System.out.println("Account type: " + accountType);
-        System.out.println("Balance: " + accountCreatedDate);
-        System.out.println("Balance: " + accountBalance);
-    }
-
-    public void DisplayAllAccount() {
+    public void updateAnAccount() {
 
     }
 

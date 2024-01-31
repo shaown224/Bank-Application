@@ -2,6 +2,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -47,12 +48,64 @@ public class MainApp {
                     break;
                 case 3:
                     System.out.println("Update an account");
+                    System.out.print("Enter the account number to update: ");
+                    String accountNumberToUpdate = scanner.nextLine();
+
+                    for (BankAccountDetails account : accounts) {
+                        if (account.accountNumber.equals(accountNumberToUpdate)) {
+                            System.out.print("Enter the new Account Holder Name: ");
+                            account.accountHolderName = scanner.nextLine();
+
+                            System.out.print("Enter the new Account Type: ");
+                            account.accountType = scanner.nextLine();
+
+                            System.out.print("Enter the new Account Created Date (yyyy-mm-dd): ");
+                            account.accountCreatedDate = Date.valueOf(scanner.nextLine());
+
+                            System.out.print("Enter the new Account Balance: ");
+                            account.accountBalance = scanner.nextDouble();
+
+                            scanner.nextLine();
+
+                            System.out.println("Account updated successfully.");
+                        }
+                    }
                     break;
                 case 4:
                     System.out.println("Delete an account");
+                    System.out.print("Enter the account number to delete: ");
+                    String accountNumberToDelete = scanner.nextLine();
+
+                    Iterator<BankAccountDetails> iterator = accounts.iterator();
+                    while (iterator.hasNext()) {
+                        BankAccountDetails account = iterator.next();
+                        if (account.accountNumber.equals(accountNumberToDelete)) {
+                            iterator.remove(); // Remove the account from the list
+                            System.out.println("Account deleted successfully.");
+                        }
+                    }
                     break;
                 case 5:
-                    System.out.println("Deposit an amount into your account");
+                    System.out.println("Deposit into an account");
+                    System.out.print("Enter the account number to deposit into: ");
+                    String accountNumberToDeposit = scanner.nextLine();
+
+                    for (BankAccountDetails account : accounts) {
+                        if (account.accountNumber.equals(accountNumberToDeposit)) {
+                            System.out.print("Enter the amount to deposit: ");
+                            double amountToDeposit = scanner.nextDouble();
+
+                            if (amountToDeposit > 0) {
+                                account.accountBalance += amountToDeposit;
+                                System.out.println("Amount deposited successfully.");
+                            } else {
+                                System.out.println("Invalid amount. Deposit amount should be greater than 0.");
+                            }
+
+                            scanner.nextLine();
+                        }
+                    }
+
                     break;
                 case 6:
                     System.out.println("Withdraw an amount from your account");
