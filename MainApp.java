@@ -109,9 +109,39 @@ public class MainApp {
                     break;
                 case 6:
                     System.out.println("Withdraw an amount from your account");
+                    System.out.print("Enter the account number to Withdraw from: ");
+                    String accountNumberFromWithdraw = scanner.nextLine();
+
+                    for (BankAccountDetails account : accounts) {
+                        if (account.accountNumber.equals(accountNumberFromWithdraw)) {
+                            System.out.print("Enter the amount withdraw from your current balance: ");
+                            double amountToWithDraw = scanner.nextDouble();
+
+                            if (amountToWithDraw < account.accountBalance) {
+                                account.accountBalance -= amountToWithDraw;
+                                System.out.println("Amount withdraw successfully.");
+                            } else {
+                                System.out
+                                        .println("Invalid amount. With amount should be greater than current balance.");
+                            }
+                            scanner.nextLine();
+                        }
+                    }
                     break;
                 case 7:
                     System.out.println("Search for an account");
+                    System.out.println("Enter your account number");
+                    String accountNumber = scanner.nextLine();
+
+                    for (BankAccountDetails account : accounts) {
+                        if (account.accountNumber.equals(accountNumber)) {
+                            System.out.println("Account Holder: " + account.getAccountHolderName());
+                            System.out.println("Account Number: " + account.getAccountNumber());
+                            System.out.println("Account Type: " + account.getAccountType());
+                            System.out.println("Account Created Date: " + account.getAccountCreatedDate());
+                            System.out.println("Account Balance: " + account.getAccountBalance());
+                        }
+                    }
                     break;
                 case 8:
                     System.out.println("Exit");
