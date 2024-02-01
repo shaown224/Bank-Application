@@ -10,6 +10,8 @@ import java.util.Scanner;
  */
 public class MainApp {
     public static void main(String[] args) {
+        double MINIMUM_ACCOUNT_OPENING_FEE_FOR_STUDENT_ACCOUNT = 400;
+        double MINIMUM_ACCOUNT_OPENING_FEE_FOR_SALARY_ACCOUNT = 1000;
         List<BankAccountDetails> accounts = new ArrayList<>();
         System.out.println("Welcome to our Bank. Please Select an option for getting your desired services");
 
@@ -30,9 +32,36 @@ public class MainApp {
             scanner.nextLine();
             switch (userSelectedOption) {
                 case 1:
+                    String accountType = "Savings";
+                    System.out.println("1. Student");
+                    System.out.println("2. Salary");
+                    int accountTypeSelection = scanner.nextInt();
+                    scanner.nextLine();
+                    switch (accountTypeSelection) {
+                        case 1:
+                            accountType = "Student";
+                            break;
+                        case 2:
+                            accountType = "Salary";
+                        default:
+                            break;
+                    }
                     BankAccountDetails newAccount = new BankAccountDetails();
-                    newAccount.createNewAccount();
+                    newAccount.createNewAccount(accountType);
+                    if (newAccount.accountType.equals("Student")) {
+                        if (newAccount.accountBalance < MINIMUM_ACCOUNT_OPENING_FEE_FOR_STUDENT_ACCOUNT) {
+                            System.out.println("Please select atleast 400 taka in account balance");
+                            break;
+                        }
+                    }
+                    if (newAccount.accountType.equals("Salary")) {
+                        if (newAccount.accountBalance < MINIMUM_ACCOUNT_OPENING_FEE_FOR_SALARY_ACCOUNT) {
+                            System.out.println("Please select atleast 1000 taka in account balance");
+                            break;
+                        }
+                    }
                     accounts.add(newAccount);
+                    System.out.println("Account Created Successfully!");
                     break;
                 case 2:
                     System.out.println("Display all accounts");
@@ -47,26 +76,15 @@ public class MainApp {
                     }
                     break;
                 case 3:
-                    System.out.println("Update an account");
+                    System.out.println(
+                            "You have only permission to update your name here because all other fields are confidential data.");
                     System.out.print("Enter the account number to update: ");
                     String accountNumberToUpdate = scanner.nextLine();
 
                     for (BankAccountDetails account : accounts) {
                         if (account.accountNumber.equals(accountNumberToUpdate)) {
                             System.out.print("Enter the new Account Holder Name: ");
-                            account.accountHolderName = scanner.nextLine();
-
-                            System.out.print("Enter the new Account Type: ");
-                            account.accountType = scanner.nextLine();
-
-                            System.out.print("Enter the new Account Created Date (yyyy-mm-dd): ");
-                            account.accountCreatedDate = Date.valueOf(scanner.nextLine());
-
-                            System.out.print("Enter the new Account Balance: ");
-                            account.accountBalance = scanner.nextDouble();
-
-                            scanner.nextLine();
-
+                            account.setAccountHolderName(scanner.nextLine());
                             System.out.println("Account updated successfully.");
                         }
                     }
@@ -80,7 +98,7 @@ public class MainApp {
                     while (iterator.hasNext()) {
                         BankAccountDetails account = iterator.next();
                         if (account.accountNumber.equals(accountNumberToDelete)) {
-                            iterator.remove(); // Remove the account from the list
+                            iterator.remove();
                             System.out.println("Account deleted successfully.");
                         }
                     }
@@ -116,6 +134,21 @@ public class MainApp {
                         if (account.accountNumber.equals(accountNumberFromWithdraw)) {
                             System.out.print("Enter the amount withdraw from your current balance: ");
                             double amountToWithDraw = scanner.nextDouble();
+
+                            if (account.accountType.equals("Student")) {
+                                if (account.accountBalance
+                                        - amountToWithDraw < MINIMUM_ACCOUNT_OPENING_FEE_FOR_STUDENT_ACCOUNT) {
+                                    System.out.println("You should keep atleast 400 taka in your account balance");
+                                    break;
+                                }
+                            }
+                            if (account.accountType.equals("Salary")) {
+                                if (account.accountBalance
+                                        - amountToWithDraw < MINIMUM_ACCOUNT_OPENING_FEE_FOR_SALARY_ACCOUNT) {
+                                    System.out.println("You should keep atleast 1000 taka in your account balance");
+                                    break;
+                                }
+                            }
 
                             if (amountToWithDraw < account.accountBalance) {
                                 account.accountBalance -= amountToWithDraw;

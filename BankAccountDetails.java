@@ -10,17 +10,16 @@ public class BankAccountDetails extends MainApp {
     protected double accountBalance;
     Scanner scanner = new Scanner(System.in);
 
-    public void createNewAccount() {
+    public void createNewAccount(String accountType) {
+        this.accountType = accountType;
         System.out.print("Account Holder Name: ");
-        accountHolderName = scanner.nextLine();
+        this.accountHolderName = scanner.nextLine();
         System.out.print("Account Number: ");
-        accountNumber = scanner.nextLine();
-        System.out.print("Account Type: ");
-        accountType = scanner.nextLine();
+        this.accountNumber = scanner.nextLine();
         System.out.print("Account Created Date (yyyy-mm-dd): ");
-        accountCreatedDate = Date.valueOf(scanner.nextLine());
+        this.accountCreatedDate = Date.valueOf(scanner.nextLine());
         System.out.print("Account Balance: ");
-        accountBalance = scanner.nextDouble();
+        this.accountBalance = scanner.nextDouble();
         scanner.nextLine();
     }
 
@@ -62,10 +61,6 @@ public class BankAccountDetails extends MainApp {
 
     public double getAccountBalance() {
         return this.accountBalance;
-    }
-
-    public void updateAnAccount() {
-
     }
 
 }
